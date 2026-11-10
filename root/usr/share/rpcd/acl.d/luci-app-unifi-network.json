@@ -1,0 +1,32 @@
+{
+	"luci-app-unifi-network": {
+		"description": "Read UniFi Network status",
+		"read": {
+			"cgi-io": [ "exec" ],
+			"file": {
+				"/usr/libexec/unifi-network/unifi-status": [ "exec" ],
+				"/usr/libexec/unifi-network/unifi-status-details": [ "exec" ]
+			}
+		}
+	},
+	"luci-app-unifi-network-admin": {
+		"description": "Manage UniFi Network and connection credentials",
+		"read": {
+			"cgi-io": [ "exec" ],
+			"file": {
+				"/usr/libexec/unifi-network/unifi-status": [ "exec" ],
+				"/usr/libexec/unifi-network/unifi-status-details": [ "exec" ]
+			},
+			"uci": [ "unifi" ]
+		},
+		"write": {
+			"file": {
+				"/usr/libexec/unifi-network/unifi-restart": [ "exec" ],
+				"/usr/libexec/unifi-network/unifi-wifi-secret": [ "exec" ],
+				"/usr/libexec/unifi-network/unifi-reconnect": [ "exec" ],
+				"/usr/libexec/unifi-network/unifi-device-update": [ "exec" ]
+			},
+			"uci": [ "unifi" ]
+		}
+	}
+}

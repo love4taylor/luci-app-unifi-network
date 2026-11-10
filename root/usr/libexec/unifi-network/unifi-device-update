@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -e
+. /usr/libexec/unifi-network/unifi-common.sh
+case "$1" in
+	check) [ "$#" -eq 2 ] && unifi_uuid "$2" || exit 1 ;;
+	upgrade) [ "$#" -eq 3 ] && unifi_uuid "$2" && unifi_uuid "$3" || exit 1 ;;
+	*) exit 1 ;;
+esac
+unifi_config
+site="$(unifi_legacy_site "$2")"
+case "$site" in ''|*[!a-zA-Z0-9_-]*) exit 1 ;; esac
+
+if [ "$1" = check ]; then
+	response="$(unifi_legacy_post "api/s/$site/cmd/productinfo" '{"cmd":"check-firmware-update"}')"
+else
+	device="$(unifi_request GET "sites/$2/devices/$3")"
+	mac="$(printf '%s' "$device" | jq -er 'select(.firmwareUpdatable == true and .state == "ONLINE") | .macAddress')"
+	unifi_mac "$mac"
+	mac="$(printf '%s' "$mac" | tr 'A-F' 'a-f')"
+	response="$(unifi_legacy_post "api/s/$site/cmd/devmgr/upgrade" "$(jq -nc --arg mac "$mac" '{mac: $mac}')")"
+fi
+
+printf '%s' "$response" | jq -e '.meta.rc == "ok"' >/dev/null
+printf '{"ok":true}\n'

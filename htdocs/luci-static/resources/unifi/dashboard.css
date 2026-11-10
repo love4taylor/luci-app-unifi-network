@@ -1,0 +1,282 @@
+.unifi-dashboard {
+	padding: 0 0 1rem;
+}
+
+.unifi-toolbar {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.unifi-settings {
+	font-size: 0.9em;
+}
+
+.unifi-section {
+	margin-top: 1rem;
+	border: 1px solid rgba(128, 128, 128, 0.25);
+	border-radius: 0.75rem;
+}
+
+.unifi-section-heading {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 0.85rem 1rem;
+	cursor: pointer;
+	list-style: none;
+	background: rgba(128, 128, 128, 0.04);
+}
+
+.unifi-section-heading::-webkit-details-marker {
+	display: none;
+}
+
+.unifi-section-heading::after {
+	content: '';
+	width: 0.45rem;
+	height: 0.45rem;
+	margin-left: auto;
+	border-right: 2px solid currentColor;
+	border-bottom: 2px solid currentColor;
+	transform: rotate(45deg);
+}
+
+.unifi-section[open] .unifi-section-heading {
+	border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.unifi-section[open] .unifi-section-heading::after {
+	transform: rotate(225deg);
+}
+
+.unifi-section-heading:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: -3px;
+}
+
+.unifi-section-title {
+	font-weight: 600;
+}
+
+.unifi-section-content {
+	padding: 1rem;
+}
+
+.unifi-total {
+	padding: 0.15rem 0.55rem;
+	border-radius: 1rem;
+	background: rgba(128, 128, 128, 0.12);
+	font-size: 0.85em;
+}
+
+.unifi-device-grid,
+.unifi-wifi-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+	gap: 1rem;
+}
+
+.unifi-device-card,
+.unifi-wifi-card {
+	min-width: 0;
+	padding: 1.15rem;
+	border: 1px solid rgba(128, 128, 128, 0.25);
+	border-radius: 0.75rem;
+}
+
+.unifi-ap-heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 0.75rem;
+	margin-bottom: 1rem;
+}
+
+.unifi-ap-identity {
+	min-width: 0;
+}
+
+.unifi-ap-identity strong,
+.unifi-ap-identity small,
+.unifi-wifi-heading strong {
+	display: block;
+	overflow-wrap: anywhere;
+}
+
+.unifi-ap-identity small {
+	margin-top: 0.2rem;
+	opacity: 0.65;
+}
+
+.unifi-state {
+	flex: none;
+	padding: 0.2rem 0.55rem;
+	border-radius: 1rem;
+	background: rgba(128, 128, 128, 0.12);
+	font-size: 0.8em;
+}
+
+.unifi-state.online {
+	color: #16814f;
+	background: rgba(22, 129, 79, 0.12);
+}
+
+.unifi-state.offline {
+	color: #b44545;
+	background: rgba(180, 69, 69, 0.12);
+}
+
+.unifi-device-details,
+.unifi-wifi-meta {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1rem 1.25rem;
+}
+
+.unifi-metric {
+	min-width: 0;
+}
+
+.unifi-metric span,
+.unifi-metric strong {
+	display: block;
+	overflow-wrap: anywhere;
+}
+
+.unifi-metric span {
+	margin-bottom: 0.3rem;
+	font-size: 0.82em;
+	opacity: 0.7;
+}
+
+.unifi-ap-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 0.5rem;
+	margin-top: 1rem;
+	padding-top: 0.75rem;
+	border-top: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.unifi-device-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: 0.5rem;
+}
+
+.unifi-firmware-availability {
+	display: block;
+	font-weight: normal;
+	opacity: 0.7;
+}
+
+.unifi-client-count {
+	display: flex;
+	align-items: baseline;
+	gap: 0.4rem;
+}
+
+.unifi-client-count strong {
+	font-size: 1.2em;
+}
+
+.unifi-client-count span {
+	font-size: 0.85em;
+	opacity: 0.7;
+}
+
+.unifi-client-table {
+	width: 100%;
+}
+
+.unifi-client-table th,
+.unifi-client-table td {
+	padding: 0.75rem 0.85rem;
+	vertical-align: middle;
+}
+
+.unifi-client-name {
+	font-weight: 600;
+}
+
+.unifi-mac {
+	font-variant-numeric: tabular-nums;
+	overflow-wrap: anywhere;
+}
+
+.unifi-rates span {
+	display: block;
+	white-space: nowrap;
+}
+
+.unifi-client-table th:last-child,
+.unifi-client-table td:last-child {
+	white-space: nowrap;
+}
+
+.unifi-empty {
+	margin: 0.75rem 0;
+	opacity: 0.7;
+}
+
+.unifi-wifi-heading {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 0.75rem;
+	margin-bottom: 1.25rem;
+	font-size: 1.05em;
+}
+
+.unifi-wifi-actions {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+	margin-top: 1rem;
+	padding-top: 0.9rem;
+	border-top: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.unifi-password {
+	max-width: 100%;
+	overflow-wrap: anywhere;
+	margin-right: auto;
+}
+
+.unifi-qr-panel {
+	margin-top: 1rem;
+	text-align: center;
+}
+
+.unifi-qr-panel img {
+	width: min(100%, 16rem);
+	background: white;
+	padding: 0.5rem;
+}
+
+@media (max-width: 35rem) {
+	.unifi-device-details,
+	.unifi-wifi-meta {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 600px) {
+	.unifi-client-table .td {
+		min-width: 0;
+		overflow-wrap: anywhere;
+	}
+
+	.unifi-client-table .td.cbi-section-actions {
+		flex-basis: 100%;
+	}
+
+	.unifi-client-table .td.cbi-section-actions .btn {
+		width: 100%;
+	}
+}

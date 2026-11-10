@@ -1,0 +1,7 @@
+config unifi 'main'
+	option url 'https://127.0.0.1:11443'
+	option sni ''
+	option api_key ''
+	option site_id ''
+	option verify_tls '1'
+	option tls_pin ''

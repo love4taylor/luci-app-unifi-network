@@ -1,0 +1,18 @@
+# Local code index
+/.codegraph/
+
+# Editor and operating system files
+/.idea/
+/.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Local dependency and build outputs
+/node_modules/
+/build/
+/dist/
+*.ipk
+*.apk

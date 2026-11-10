@@ -1,0 +1,27 @@
+#!/bin/sh
+
+. /usr/libexec/unifi-network/unifi-common.sh
+
+if [ "$1" = site ]; then
+	[ "$#" -eq 1 ] || exit 1
+	site_id="$(uci -q get unifi.main.site_id)"
+	unifi_uuid "$site_id" && printf '%s\n' "$site_id"
+	exit 0
+fi
+
+unifi_config || exit 1
+
+case "$1" in
+	sites)
+		[ "$#" -eq 1 ] || exit 1
+		unifi_request GET 'sites?limit=200&offset=0'
+		;;
+	devices|clients)
+		[ "$#" -eq 3 ] || exit 1
+		unifi_uuid "$2" || exit 1
+		case "$3" in ''|*[!0-9]*) exit 1 ;; esac
+		[ "$3" -le 100000 ] || exit 1
+		unifi_request GET "sites/$2/$1?limit=200&offset=$3"
+		;;
+	*) exit 1 ;;
+esac

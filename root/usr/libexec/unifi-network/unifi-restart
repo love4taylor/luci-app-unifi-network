@@ -1,0 +1,7 @@
+#!/bin/sh
+
+. /usr/libexec/unifi-network/unifi-common.sh
+[ "$#" -eq 2 ] || exit 1
+unifi_uuid "$1" && unifi_uuid "$2" || exit 1
+unifi_config || exit 1
+unifi_request POST "sites/$1/devices/$2/actions"

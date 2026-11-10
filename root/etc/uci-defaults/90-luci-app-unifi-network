@@ -1,0 +1,4 @@
+#!/bin/sh
+
+chmod 0600 /etc/config/unifi
+exit 0

@@ -1,0 +1,45 @@
+#!/bin/sh
+
+set -e
+. /usr/libexec/unifi-network/unifi-common.sh
+[ "$#" -eq 1 ] && unifi_uuid "$1" || exit 1
+unifi_config
+site="$(unifi_legacy_site "$1")"
+case "$site" in ''|*[!a-zA-Z0-9_-]*) exit 1 ;; esac
+
+response="$(unifi_legacy_request "api/s/$site/stat/device")"
+devices="$(printf '%s' "$response" | jq -c '[.data[] | {
+	mac: (.mac | ascii_downcase),
+	cpuUtilizationPct: .["system-stats"].cpu,
+	loadAverage: [.sys_stats.loadavg_1, .sys_stats.loadavg_5, .sys_stats.loadavg_15],
+	memoryUtilizationPct: .["system-stats"].mem,
+	uptimeSec: .uptime
+}]')"
+response="$(unifi_legacy_request "api/s/$site/stat/sta")"
+clients="$(printf '%s' "$response" | jq -c '[.data[] | {
+	mac: (.mac | ascii_downcase),
+	isWired: .is_wired,
+	radioProtocol: .radio_proto,
+	signalDbm: .signal,
+	txRateKbps: .tx_rate,
+	rxRateKbps: .rx_rate,
+	wiredRateMbps: .wired_rate_mbps,
+	switchMac: .sw_mac,
+	switchPort: .sw_port
+}]')"
+response="$(unifi_legacy_request "api/s/$site/rest/wlanconf")"
+wifi="$(printf '%s' "$response" | jq -c '[.data[] | {
+	id: ._id,
+	name: .name,
+	enabled: .enabled,
+	hidden: .hide_ssid,
+	bands: (.wlan_bands // [ .wlan_band ]),
+	security: .security,
+	wpaMode: .wpa_mode,
+	wpa3Support: .wpa3_support,
+	wpa3Transition: .wpa3_transition,
+	hasPassword: (.x_passphrase != null and .x_passphrase != "")
+}]')"
+
+printf '%s\n%s\n%s\n' "$devices" "$clients" "$wifi" | \
+	jq -s '{devices: .[0], clients: .[1], wifi: .[2]}'
